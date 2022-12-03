@@ -1,22 +1,29 @@
-import os
-from flask import Flask, render_template, request, url_for, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, redirect, flash, session
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mysqldb import MySQL #pip install flask-mysqldb
+import yaml
 
-from sqlalchemy.sql import func
-import mysql.connector
+app = Flask(__name__)
+app.config['SECRET_KEY'] = "Never push this line to github public repo"
 
-# mydb = mysql.connector.connect(
-#     host='localhost',
-#     username='root',
-#     password='',
-#     port=3306
-# )
+cred = yaml.load(open('cred.yaml'), Loader=yaml.Loader)
+app.config['MYSQL_HOST'] = cred['mysql_host']
+app.config['MYSQL_USER'] = cred['mysql_user']
+app.config['MYSQL_PASSWORD'] = cred['mysql_password']
+app.config['MYSQL_DB'] = cred['mysql_db']
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+mysql = MySQL(app)
 
-app = Flask(name)
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+@app.route('/addmed/', methods=['GET', 'POST'])
 
-if name == 'main':
-    app.run(debug=True)
+def showMeds(){
+
+}
+
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
+# if name == 'main':
+#     app.run(debug=True)
