@@ -151,6 +151,18 @@ def edit_medicine(id):
             medicine_form['medicine_price'] = medicine['medicine_price']
             medicine_form['medicine_stock'] = medicine['medicine_stock']
             return render_template('edit-medicine.html', medicine_form=medicine_form)
+
+@app.route('/delete-medicine/<int:id>/', methods=['GET'])
+def delete_medicine(id):
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        queryStatement = f"DELETE FROM medicine WHERE medicine_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Delete Medicine Successfully', 'success')
+        return redirect('/stock/')
         
 
 @app.route('/createmember/', methods=['GET', 'POST'])

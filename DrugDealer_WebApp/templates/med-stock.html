@@ -24,7 +24,7 @@
                     <td>{{ medicine['medicine_price'] }}</td>
                     <td>{{ medicine['medicine_stock'] }}</td>
                     <td><a href="/edit-medicine/{{medicine['medicine_id']}}" class="btn btn-sm btn-warning">Edit</a></td>
-                    <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+                    <td><a href="/delete-medicine/{{medicine['medicine_id']}}" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
