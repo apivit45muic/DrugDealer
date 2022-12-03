@@ -92,5 +92,11 @@ def register():
         return redirect('/')    
     return render_template('register.html')
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out", 'info')
+    return redirect('/')
+
 if __name__ == '__main__':
 	app.run(debug=True)
