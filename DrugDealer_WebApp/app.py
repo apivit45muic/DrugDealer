@@ -23,6 +23,9 @@ def index():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if 'login' in session:
+        flash('You have already sign in', 'danger')
+        return redirect('/')
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
@@ -95,6 +98,11 @@ def stock():
 
 @app.route('/addmed/', methods=['GET', 'POST'])
 def addmed():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'GET':
         return render_template('new-medicine.html')
     elif request.method == 'POST':
@@ -124,6 +132,11 @@ def addmed():
 
 @app.route('/edit-medicine/<int:id>/', methods=['GET', 'POST'])
 def edit_medicine(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'POST':
         cur = mysql.connection.cursor()
         name = request.form['medicine_name']
@@ -154,6 +167,11 @@ def edit_medicine(id):
 
 @app.route('/delete-medicine/<int:id>/', methods=['GET'])
 def delete_medicine(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'GET':
         cur = mysql.connection.cursor()
         queryStatement = f"DELETE FROM medicine WHERE medicine_id = {id}"
@@ -167,6 +185,11 @@ def delete_medicine(id):
 
 @app.route('/createmember/', methods=['GET', 'POST'])
 def createmember():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'GET':
         return render_template('createmember.html')
     elif request.method == 'POST':
@@ -194,6 +217,11 @@ def createmember():
 
 @app.route('/edit-member/<int:id>/', methods=['GET', 'POST'])
 def edit_member(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'POST':
         cur = mysql.connection.cursor()
         point = request.form['member_point']
@@ -220,6 +248,11 @@ def edit_member(id):
         
 @app.route('/delete-member/<int:id>/', methods=['GET'])
 def delete_member(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
     if request.method == 'GET':
         cur = mysql.connection.cursor()
         queryStatement = f"DELETE FROM member WHERE member_id = {id}"
@@ -232,6 +265,9 @@ def delete_member(id):
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
+    if 'login' in session:
+        flash('Logout first', 'danger')
+        return redirect('/')
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
@@ -270,6 +306,9 @@ def register():
 
 @app.route('/logout')
 def logout():
+    if 'login' not in session:
+        flash('You have not logged in', 'danger')
+        return redirect('/')
     session.clear()
     flash("You have been logged out", 'info')
     return redirect('/')
