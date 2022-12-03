@@ -6,8 +6,16 @@ import yaml
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('main-user.html')
+def index_admin():
+    return render_template('index_admin.html')
+
+@app.route('/index_employee/')
+def index_employee():
+    return render_template('index_employee.html')
+
+@app.route('/payment/')
+def payment():
+    return render_template('payment.html')
 
 if __name__ == '__main__':
 	app.run(debug=True)
