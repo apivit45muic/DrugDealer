@@ -108,7 +108,8 @@ def edit_member(id):
     if request.method == 'POST':
         cur = mysql.connection.cursor()
         point = request.form['member_point']
-        queryStatement = f"UPDATE member SET member_point= '{point}' WHERE member_id = {id}"
+        tel = request.form['member_tel']
+        queryStatement = f"UPDATE member SET member_point= '{point}', member_tel = '{tel}' WHERE member_id = {id}"
         print(queryStatement)
         cur.execute(queryStatement)
         mysql.connection.commit()
@@ -123,6 +124,7 @@ def edit_member(id):
         if result_value > 0:
             member = cur.fetchone()
             member_form = {}
+            member_form['member_tel'] = member['member_tel']
             member_form['member_point'] = member['member_point']
             member_form['member_name'] = member['name']
             return render_template('edit-member.html', member_form=member_form)
