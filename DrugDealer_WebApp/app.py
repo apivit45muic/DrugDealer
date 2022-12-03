@@ -75,6 +75,24 @@ def members():
     else:
         return render_template('member.html',mmembers=None)
     
+@app.route('/stock/')
+def stock():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        medicines = cur.fetchall()
+        return render_template('med-stock.html', medicines=medicines)
+    else:
+        return render_template('med-stock.html',mediciness=None)
+    
 
 @app.route('/createmember/', methods=['GET', 'POST'])
 def createmember():
