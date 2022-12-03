@@ -122,6 +122,37 @@ def addmed():
         return redirect('/stock')    
     return render_template('new-medicine.html')
 
+@app.route('/edit-medicine/<int:id>/', methods=['GET', 'POST'])
+def edit_medicine(id):
+    if request.method == 'POST':
+        cur = mysql.connection.cursor()
+        name = request.form['medicine_name']
+        detail = request.form['medicine_detail']
+        price = request.form['medicine_price']
+        stock = request.form['medicine_stock']
+        queryStatement = f"UPDATE medicine SET medicine_name= '{name}', medicine_detail = '{detail}', medicine_price = {price}, medicine_stock = {stock}  WHERE medicine_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Medicine updated', 'success')
+        return redirect('/stock')
+    else:
+        cur = mysql.connection.cursor()
+        queryStatement = f"SELECT * FROM medicine WHERE medicine_id = {id}"
+        print(queryStatement)
+        result_value = cur.execute(queryStatement)
+        if result_value > 0:
+            medicine = cur.fetchone()
+            medicine_form = {}
+            medicine_form['medicine_id'] = medicine['medicine_id']
+            medicine_form['medicine_name'] = medicine['medicine_name']
+            medicine_form['medicine_detail'] = medicine['medicine_detail']
+            medicine_form['medicine_price'] = medicine['medicine_price']
+            medicine_form['medicine_stock'] = medicine['medicine_stock']
+            return render_template('edit-medicine.html', medicine_form=medicine_form)
+        
+
 @app.route('/createmember/', methods=['GET', 'POST'])
 def createmember():
     if request.method == 'GET':
