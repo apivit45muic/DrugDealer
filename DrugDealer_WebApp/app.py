@@ -74,6 +74,34 @@ def members():
         return render_template('member.html', members=members)
     else:
         return render_template('member.html',mmembers=None)
+    
+
+@app.route('/createmember/', methods=['GET', 'POST'])
+def createmember():
+    if request.method == 'GET':
+        return render_template('createmember.html')
+    elif request.method == 'POST':
+        memberDetails = request.form
+        
+        mem1 = memberDetails['member_name']
+        mem2 = memberDetails['member_tel']
+        
+        print(mem1 + "," + mem2)
+        
+        queryStatement = (
+            f"INSERT INTO "
+            f"member(name, member_tel, member_point) "
+            f"VALUES('{mem1}', '{mem2}', 0)"
+        )
+        print(queryStatement)
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        
+        flash("Create Member Successfully.", "success")
+        return redirect('/member')    
+    return render_template('createmember.html')
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -109,7 +137,7 @@ def register():
         mysql.connection.commit()
         cur.close()
         
-        flash("Form Submitted Successfully.", "success")
+        flash("Register Successfully.", "success")
         return redirect('/')    
     return render_template('register.html')
 

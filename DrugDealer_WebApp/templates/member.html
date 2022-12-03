@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="display-2" > Member List </div>
-        <table class="table">
+    <a href="{{ url_for('createmember') }}" class="btn btn-sm btn-primary mt-3">Create New Member</a>
+        <table class="table mt-3">
             <thead>
                 <tr>
                 <th scope="col">ID</th>
@@ -20,7 +21,7 @@
                     <td>{{ member['name'] }}</td>
                     <td>{{ member['member_tel'] }}</td>
                     <td>{{ member['member_point'] }}</td>
-                    <td><a href="#" class="btn btn-sm btn-primary">Edit</a></td>
+                    <td><a href="#" class="btn btn-sm btn-warning">Edit</a></td>
                     <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
