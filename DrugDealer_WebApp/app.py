@@ -124,7 +124,20 @@ def edit_member(id):
             member = cur.fetchone()
             member_form = {}
             member_form['member_point'] = member['member_point']
+            member_form['member_name'] = member['name']
             return render_template('edit-member.html', member_form=member_form)
+        
+@app.route('/delete-member/<int:id>/', methods=['GET'])
+def delete_member(id):
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        queryStatement = f"DELETE FROM member WHERE member_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Delete Member Successfully', 'success')
+        return redirect('/member/')
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():

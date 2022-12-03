@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="display-2">
-    Edit Member {id}
+    Edit Member ({{ member_form['member_name'] }})
 </div>
 <div class="shadow p-3 mb-5 bg-body rounded" style="margin: 40px 40px 40px 40px;">
     <form method="POST">
@@ -9,7 +9,7 @@
             <label for="exampleFormControlInput1" class="form-label">Point</label>
             <input type="text" class="form-control" id="member_point" name="member_point" value="{{ member_form['member_point'] }}" />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Save & Change</button>
     </form>
 </div>
 {% endblock %}
