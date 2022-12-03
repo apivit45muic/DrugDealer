@@ -14,12 +14,17 @@ app.config['MYSQL_DB'] = cred['mysql_db']
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
-
 @app.route('/addmed/', methods=['GET', 'POST'])
 
-def showMeds(){
+def showMeds():
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine"
+    cur.execute(queryStatement)
+    medsList = cur.fetchall()
+    return render_template("index.html", medsList=medsList)
 
-}
+if __name__ == '__main__':
+	app.run(debug=True)
 
 # @app.route("/")
 # def index():
