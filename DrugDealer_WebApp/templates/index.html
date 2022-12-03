@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
+<br></br>
 <h1>คลังยา</h1>
 <hr/>
-<h2>Drug</h2>
 
 <table>
     <tr>
-      <th>Company</th>
-      <th>Contact</th>
-      <th>Country</th>
+      <th>Medicine ID</th>
+      <th>Name</th>
+      <th>Information</th>
+      <th>Price</th>
+      <th>Stock</th>
     </tr>
+    {% for med in medsList %} 
     <tr>
-      <td>Alfreds Futterkiste</td>
-      <td>Maria Anders</td>
-      <td>Germany</td>
+      <th scope="row">{{ med['medicine_id'] }}</th>
+      <td>{{ med['medicine_name'] }}</td>
+      <td>{{ med['medicine_detail'] }}</td>
+      <td>{{ med['medicine_price'] }}</td>
+      <td>{{ med['medicine_stock'] }}</td>
     </tr>
-    <tr>
-      <td>Centro comercial Moctezuma</td>
-      <td>Francisco Chang</td>
-      <td>Mexico</td>
-    </tr>
+    {% endfor %}
   </table>
 
 {% endblock %}
