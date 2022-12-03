@@ -18,5 +18,43 @@ mysql = MySQL(app)
 def index():
 	return render_template("index.html")
 
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    elif request.method == 'POST':
+        userDetails = request.form
+        
+         # Check the password and confirm password
+        if userDetails['password'] != userDetails['confirm_password']:
+            flash("Passwords do not match!", "danger")
+            return render_template('register.html')
+        p1 = userDetails['username']
+        p2 = userDetails['password']
+        p3 = userDetails['first_name']
+        p4 = userDetails['last_name']
+        p5 = userDetails['email']
+        p6 = userDetails['tel']
+        
+        hashed_pw = generate_password_hash(p2)
+        
+        print(p1 + "," + p2 + "," + hashed_pw + "," + p3 + "," + p4 + "," + p5 + "," + p6)
+        
+        queryStatement = (
+            f"INSERT INTO "
+            f"employee(username, password, firstname, lastname, email, employee_tel, role_id) "
+            f"VALUES('{p1}', '{hashed_pw}', '{p3}', '{p4}', '{p5}', '{p6}', 1)"
+        )
+        print(check_password_hash(hashed_pw, p2))
+        print(queryStatement)
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        
+        flash("Form Submitted Successfully.", "success")
+        return redirect('/')    
+    return render_template('register.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)

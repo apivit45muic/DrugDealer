@@ -7,7 +7,7 @@ create table employee
     firstname    varchar(30)  null,
     lastname     varchar(20)  null,
     email        varchar(30)  null,
-    employee_tel int          null,
+    employee_tel varchar(10)  null,
     role_id      int          references role(role_id)
 );
 
@@ -26,7 +26,7 @@ create table member
     member_id    int auto_increment
         primary key,
     name         varchar(30) null,
-    member_tel   int         null,
+    member_tel   varchar(10)         null,
     member_point int         null
 );
 
@@ -42,7 +42,7 @@ create table sale
 (
     sale_id     int auto_increment
         primary key,
-    sale_date   int null,
+    sale_date   timestamp null,
     total_sale  int null,
     discount    int null,
     member_id   int references member(member_id),
