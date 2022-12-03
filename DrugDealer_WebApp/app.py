@@ -57,6 +57,24 @@ def login():
         return redirect('/')
     return render_template('login.html')
 
+@app.route('/member/')
+def members():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM member"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        members = cur.fetchall()
+        return render_template('member.html', members=members)
+    else:
+        return render_template('member.html',mmembers=None)
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':

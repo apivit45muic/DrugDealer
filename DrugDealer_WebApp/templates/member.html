@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="display-2" > Member List </div>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Point</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for member in members %}
+                    <tr>
+                    <th scope="row">{{ member['member_id'] }}</th>
+                    <td>{{ member['name'] }}</td>
+                    <td>{{ member['member_tel'] }}</td>
+                    <td>{{ member['member_point'] }}</td>
+                    <td><a href="#" class="btn btn-sm btn-primary">Edit</a></td>
+                    <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
