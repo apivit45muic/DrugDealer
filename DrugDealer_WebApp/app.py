@@ -103,6 +103,29 @@ def createmember():
         return redirect('/member')    
     return render_template('createmember.html')
 
+@app.route('/edit-member/<int:id>/', methods=['GET', 'POST'])
+def edit_member(id):
+    if request.method == 'POST':
+        cur = mysql.connection.cursor()
+        point = request.form['member_point']
+        queryStatement = f"UPDATE member SET member_point= '{point}' WHERE member_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Member updated', 'success')
+        return redirect('/member')
+    else:
+        cur = mysql.connection.cursor()
+        queryStatement = f"SELECT * FROM member WHERE member_id = {id}"
+        print(queryStatement)
+        result_value = cur.execute(queryStatement)
+        if result_value > 0:
+            member = cur.fetchone()
+            member_form = {}
+            member_form['member_point'] = member['member_point']
+            return render_template('edit-member.html', member_form=member_form)
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':

@@ -21,7 +21,7 @@
                     <td>{{ member['name'] }}</td>
                     <td>{{ member['member_tel'] }}</td>
                     <td>{{ member['member_point'] }}</td>
-                    <td><a href="#" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><a href="/edit-member/{{member['member_id']}}" class="btn btn-sm btn-warning">Edit</a></td>
                     <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
