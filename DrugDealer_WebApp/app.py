@@ -16,7 +16,10 @@ mysql = MySQL(app)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+    if 'login' not in session:
+        return redirect('login')
+    else:
+    	return render_template("index.html")
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
