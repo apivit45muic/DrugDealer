@@ -92,7 +92,35 @@ def stock():
         return render_template('med-stock.html', medicines=medicines)
     else:
         return render_template('med-stock.html',mediciness=None)
-    
+
+@app.route('/addmed/', methods=['GET', 'POST'])
+def addmed():
+    if request.method == 'GET':
+        return render_template('new-medicine.html')
+    elif request.method == 'POST':
+        medDetails = request.form
+        
+        med1 = medDetails['medicine_name']
+        med2 = medDetails['medicine_detail']
+        med3 = medDetails['medicine_price']
+        med4 = medDetails['medicine_stock']
+        
+        print(med1 + "," + med2 + "," + med3 + "," + med4)
+        
+        queryStatement = (
+            f"INSERT INTO "
+            f"medicine(medicine_name, medicine_detail, medicine_price, medicine_stock) "
+            f"VALUES('{med1}', '{med2}', {med3}, {med4})"
+        )
+        print(queryStatement)
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        
+        flash("Added Medicine Successfully.", "success")
+        return redirect('/stock')    
+    return render_template('new-medicine.html')
 
 @app.route('/createmember/', methods=['GET', 'POST'])
 def createmember():

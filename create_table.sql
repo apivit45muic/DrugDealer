@@ -17,8 +17,8 @@ create table medicine
         primary key,
     medicine_name   varchar(50)  null,
     medicine_detail varchar(128) null,
-    medicine_price  int          null,
-    medicine_stock  varchar(35)  null
+    medicine_price  int default 0 not null,
+    medicine_stock  int default 0 not null
 );
 
 create table member
@@ -43,8 +43,8 @@ create table sale
     sale_id     int auto_increment
         primary key,
     sale_date   timestamp null,
-    total_sale  int null,
-    discount    int null,
+    total_sale  int default 0 not null,
+    discount    int default 0 not null,
     member_id   int references member(member_id),
     employee_id int references employee(employee_id)
 );

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="display-2" > Medicine Stock List </div>
-    <a href="#" class="btn btn-sm btn-primary mt-3">Add New Medicine</a>
+    <a href="{{ url_for('addmed') }}" class="btn btn-sm btn-primary mt-3">Add New Medicine</a>
         <table class="table mt-3">
             <thead>
                 <tr>
