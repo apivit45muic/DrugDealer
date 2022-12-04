@@ -7,7 +7,7 @@ create table employee
     firstname    varchar(30)  null,
     lastname     varchar(20)  null,
     email        varchar(30)  null,
-    employee_tel int          null,
+    employee_tel varchar(10)  null,
     role_id      int          references role(role_id)
 );
 
@@ -17,8 +17,8 @@ create table medicine
         primary key,
     medicine_name   varchar(50)  null,
     medicine_detail varchar(128) null,
-    medicine_price  int          null,
-    medicine_stock  varchar(35)  null
+    medicine_price  int default 0 not null,
+    medicine_stock  int default 0 not null
 );
 
 create table member
@@ -26,7 +26,7 @@ create table member
     member_id    int auto_increment
         primary key,
     name         varchar(30) null,
-    member_tel   int         null,
+    member_tel   varchar(10)         null,
     member_point int         null
 );
 
@@ -42,9 +42,10 @@ create table sale
 (
     sale_id     int auto_increment
         primary key,
-    sale_date   int null,
-    total_sale  int null,
-    discount    int null,
+
+    sale_date   timestamp null,
+    total_sale  int default 0 not null,
+    discount    int default 0 not null,
     member_id   int references member(member_id),
     employee_id int references employee(employee_id)
 );
@@ -57,5 +58,4 @@ create table sale_detail
     medicine_id    int references medicine(medicine_id),
     amount         int null
 );
-
 
