@@ -19,8 +19,10 @@ mysql = MySQL(app)
 def index():
     if 'login' not in session:
         return redirect('login')
-    else:
+    elif session['userroleid'] == str(2):
     	return render_template("index_admin.html")
+    else:
+        return render_template("index_employee.html")
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
