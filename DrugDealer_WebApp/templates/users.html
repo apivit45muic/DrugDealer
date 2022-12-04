@@ -19,14 +19,14 @@
             <tbody>
                 {% for user in users %}
                     <tr>
-                    <th scope="row">{{ user['user_id'] }}</th>
+                    <th scope="row">{{ user['employee_id'] }}</th>
                     <td>{{ user['username'] }}</td>
                     <td>{{ user['firstname'] }}</td>
                     <td>{{ user['lastname'] }}</td>
                     <td>{{ user['email'] }}</td>
                     <td>{{ user['employee_tel'] }}</td>
                     <td>{{ user['role_id'] }}</td>
-                    <td><a href="#" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><a href="/edit-user/{{user['employee_id']}}" class="btn btn-sm btn-warning">Edit</a></td>
                     <td><a href="/delete-user/{{user['employee_id']}}" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
