@@ -7,7 +7,7 @@ create table employee
     firstname    varchar(30)  null,
     lastname     varchar(20)  null,
     email        varchar(30)  null,
-    employee_tel int          null,
+    employee_tel varchar(10)  null,
     role_id      int          references role(role_id)
 );
 
