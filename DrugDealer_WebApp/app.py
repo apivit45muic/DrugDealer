@@ -99,8 +99,8 @@ def users():
     else:
         return render_template('users.html')
 
-@app.route('/stock-employee/')
-def stock_employee():
+@app.route('/stock/')
+def stock():
     try:
         username = session['username']
     except:
@@ -110,25 +110,29 @@ def stock_employee():
     queryStatement = f"SELECT * FROM medicine"
     cur.execute(queryStatement)
     medsList = cur.fetchall()
-    return render_template("stock-employee.html", medsList=medsList)
-    
-@app.route('/stock-admin/')
-def stock_admin():
-    try:
-        username = session['username']
-    except:
-        flash('Please sign in first', 'danger')
-        return redirect('/login')
-
-    cur = mysql.connection.cursor()
-    queryStatement = f"SELECT * FROM medicine"
-    print(queryStatement)
-    result_value = cur.execute(queryStatement) 
-    if result_value > 0:
-        medicines = cur.fetchall()
-        return render_template('stock-admin.html', medicines=medicines)
+    if session['userroleid'] == str(2):
+    	return render_template('stock-admin.html', medicines=medsList)
     else:
-        return render_template('stock-admin.html')
+    	return render_template('stock-employee.html', medsList=medsList)
+    
+    
+# @app.route('/stock-admin/')
+# def stock_admin():
+#     try:
+#         username = session['username']
+#     except:
+#         flash('Please sign in first', 'danger')
+#         return redirect('/login')
+
+#     cur = mysql.connection.cursor()
+#     queryStatement = f"SELECT * FROM medicine"
+#     print(queryStatement)
+#     result_value = cur.execute(queryStatement) 
+#     if result_value > 0:
+#         medicines = cur.fetchall()
+#         return render_template('stock-admin.html', medicines=medicines)
+#     else:
+#         return render_template('stock-admin.html')
 
 @app.route('/addmed/', methods=['GET', 'POST'])
 def addmed():
