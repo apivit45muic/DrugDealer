@@ -79,7 +79,7 @@ def members():
         members = cur.fetchall()
         return render_template('member.html', members=members)
     else:
-        return render_template('member.html',members=None)
+        return render_template('member.html')
     
 @app.route('/user/')
 def users():
@@ -97,10 +97,23 @@ def users():
         users = cur.fetchall()
         return render_template('users.html', users=users)
     else:
-        return render_template('users.html',users=None)
+        return render_template('users.html')
+
+@app.route('/stock-employee/')
+def stock_employee():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine"
+    cur.execute(queryStatement)
+    medsList = cur.fetchall()
+    return render_template("stock-employee.html", medsList=medsList)
     
-@app.route('/stock/')
-def stock():
+@app.route('/stock-admin/')
+def stock_admin():
     try:
         username = session['username']
     except:
@@ -113,9 +126,9 @@ def stock():
     result_value = cur.execute(queryStatement) 
     if result_value > 0:
         medicines = cur.fetchall()
-        return render_template('med-stock.html', medicines=medicines)
+        return render_template('stock-admin.html', medicines=medicines)
     else:
-        return render_template('med-stock.html',mediciness=None)
+        return render_template('stock-admin.html')
 
 @app.route('/addmed/', methods=['GET', 'POST'])
 def addmed():
@@ -410,14 +423,6 @@ def payment():
     else:
         return render_template('payment.html',mediciness=None)
     
-@app.route('/stocklist/')
-def showMeds():
-    cur = mysql.connection.cursor()
-    queryStatement = f"SELECT * FROM medicine"
-    cur.execute(queryStatement)
-    medsList = cur.fetchall()
-    return render_template("stock.html", medsList=medsList)
-
 @app.route('/CheckOut/')
 def CheckOut():
     return render_template('proceedCheckOut.html')
