@@ -42,6 +42,7 @@ create table sale
 (
     sale_id     int auto_increment
         primary key,
+
     sale_date   timestamp null,
     total_sale  int default 0 not null,
     discount    int default 0 not null,
@@ -57,5 +58,4 @@ create table sale_detail
     medicine_id    int references medicine(medicine_id),
     amount         int null
 );
-
 
