@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_mysqldb import MySQL #pip install flask-mysqldb
+
+from flask_mysqldb import MySQL
 import yaml
 
 app = Flask(__name__)
@@ -14,8 +15,19 @@ app.config['MYSQL_DB'] = cred['mysql_db']
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
-@app.route('/stock/', methods=['GET', 'POST'])
+@app.route('/')
+def index_admin():
+    return render_template('index_admin.html')
 
+@app.route('/index_employee/')
+def index_employee():
+    return render_template('index_employee.html')
+
+@app.route('/payment/')
+def payment():
+    return render_template('payment.html')
+    
+@app.route('/stock/', methods=['GET', 'POST'])
 def showMeds():
     cur = mysql.connection.cursor()
     queryStatement = f"SELECT * FROM medicine"

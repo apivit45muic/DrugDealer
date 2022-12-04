@@ -7,7 +7,7 @@ create table employee
     firstname    varchar(30)  null,
     lastname     varchar(20)  null,
     email        varchar(30)  null,
-    employee_tel varchar(10)  null,
+    employee_tel int          null,
     role_id      int          references role(role_id)
 );
 
@@ -42,6 +42,7 @@ create table sale
 (
     sale_id     int auto_increment
         primary key,
+
     sale_date   timestamp null,
     total_sale  int default 0 not null,
     discount    int default 0 not null,
