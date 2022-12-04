@@ -20,7 +20,7 @@ def index():
     if 'login' not in session:
         return redirect('login')
     else:
-    	return render_template("index.html")
+    	return render_template("index_employee.html")
       
 @app.route('/')
 def index_admin():
@@ -81,7 +81,25 @@ def members():
         members = cur.fetchall()
         return render_template('member.html', members=members)
     else:
-        return render_template('member.html',mmembers=None)
+        return render_template('member.html',members=None)
+    
+@app.route('/user/')
+def users():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM employee"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        users = cur.fetchall()
+        return render_template('users.html', users=users)
+    else:
+        return render_template('users.html',users=None)
     
 @app.route('/stock/')
 def stock():
