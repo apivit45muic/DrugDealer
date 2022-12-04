@@ -320,7 +320,21 @@ def index_employee():
 
 @app.route('/payment/')
 def payment():
-    return render_template('payment.html')
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        medicines = cur.fetchall()
+        return render_template('payment.html', medicines=medicines)
+    else:
+        return render_template('payment.html',mediciness=None)
     
 @app.route('/stocklist/')
 def showMeds():
