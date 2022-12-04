@@ -20,11 +20,7 @@ def index():
     if 'login' not in session:
         return redirect('login')
     else:
-    	return render_template("index.html")
-      
-@app.route('/')
-def index_admin():
-    return render_template('index_admin.html')
+    	return render_template("index_admin.html")
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -336,10 +332,3 @@ def showMeds():
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
-
-# if name == 'main':
-#     app.run(debug=True)
