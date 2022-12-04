@@ -27,7 +27,7 @@ def index_employee():
 def payment():
     return render_template('payment.html')
     
-@app.route('/stock/', methods=['GET', 'POST'])
+@app.route('/stock/')
 def showMeds():
     cur = mysql.connection.cursor()
     queryStatement = f"SELECT * FROM medicine"
