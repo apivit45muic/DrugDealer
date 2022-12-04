@@ -13,7 +13,7 @@
                 <th scope="col">Medicine Name</th>
                 <th scope="col">Medicine Price</th>
                 <th scope="col">Medicine Stock</th>
-                <th scope="col">Medicine Checkout</th>
+                <th scope="col">Medicine Stock Checkout</th>
                 </tr>
             </thead>
 
@@ -33,7 +33,7 @@
         </table>
     </div>
     <div class="d-flex flex-column" style="margin: -120px 100px">
-        <button class="btn btn-sm btn-primary mt-3 align-self-end">Checkout</a>
+        <a href="{{ url_for('CheckOut') }}" class="btn btn-sm btn-primary mt-3 align-self-end">Checkout</a>
       </div>
 </div>
 {% endblock %}

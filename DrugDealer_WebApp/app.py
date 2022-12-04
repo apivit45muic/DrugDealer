@@ -346,5 +346,9 @@ def showMeds():
     medsList = cur.fetchall()
     return render_template("stock.html", medsList=medsList)
 
+@app.route('/CheckOut/')
+def CheckOut():
+    return render_template('proceedCheckOut.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)
