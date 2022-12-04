@@ -286,6 +286,23 @@ def delete_member(id):
         flash('Delete Member Successfully', 'success')
         return redirect('/member/')
 
+@app.route('/delete-user/<int:id>/', methods=['GET'])
+def delete_user(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        queryStatement = f"DELETE FROM employee WHERE employee_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Delete User Successfully', 'success')
+        return redirect('/user/')
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if 'login' in session:
