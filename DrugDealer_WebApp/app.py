@@ -19,12 +19,10 @@ mysql = MySQL(app)
 def index():
     if 'login' not in session:
         return redirect('login')
+    elif session['userroleid'] == str(2):
+    	return render_template("index_admin.html")
     else:
     	return render_template("index_employee.html")
-      
-@app.route('/')
-def index_admin():
-    return render_template('index_admin.html')
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -396,7 +394,21 @@ def index_employee():
 
 @app.route('/payment/')
 def payment():
-    return render_template('payment.html')
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        medicines = cur.fetchall()
+        return render_template('payment.html', medicines=medicines)
+    else:
+        return render_template('payment.html',mediciness=None)
     
 @app.route('/stocklist/')
 def showMeds():
@@ -406,12 +418,9 @@ def showMeds():
     medsList = cur.fetchall()
     return render_template("stock.html", medsList=medsList)
 
+@app.route('/CheckOut/')
+def CheckOut():
+    return render_template('proceedCheckOut.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)
-
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
-
-# if name == 'main':
-#     app.run(debug=True)
