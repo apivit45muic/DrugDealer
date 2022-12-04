@@ -22,7 +22,7 @@ def index():
     elif session['userroleid'] == str(2):
     	return render_template("index_admin.html")
     else:
-        return render_template("index_employee.html")
+    	return render_template("index_employee.html")
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -79,7 +79,25 @@ def members():
         members = cur.fetchall()
         return render_template('member.html', members=members)
     else:
-        return render_template('member.html',mmembers=None)
+        return render_template('member.html',members=None)
+    
+@app.route('/user/')
+def users():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM employee"
+    print(queryStatement)
+    result_value = cur.execute(queryStatement) 
+    if result_value > 0:
+        users = cur.fetchall()
+        return render_template('users.html', users=users)
+    else:
+        return render_template('users.html',users=None)
     
 @app.route('/stock/')
 def stock():
@@ -248,6 +266,43 @@ def edit_member(id):
             member_form['member_point'] = member['member_point']
             member_form['member_name'] = member['name']
             return render_template('edit-member.html', member_form=member_form)
+
+@app.route('/edit-user/<int:id>/', methods=['GET', 'POST'])
+def edit_user(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+    if request.method == 'POST':
+        cur = mysql.connection.cursor()
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        tel = request.form['employee_tel']
+        role = request.form['role_id']
+        queryStatement = f"UPDATE employee SET firstname = '{firstname}', lastname = '{lastname}', email = '{email}', employee_tel = '{tel}', role_id = {role} WHERE employee_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('User updated', 'success')
+        return redirect('/user')
+    else:
+        cur = mysql.connection.cursor()
+        queryStatement = f"SELECT * FROM employee WHERE employee_id = {id}"
+        print(queryStatement)
+        result_value = cur.execute(queryStatement)
+        if result_value > 0:
+            user = cur.fetchone()
+            user_form = {}
+            user_form['username'] = user['username']
+            user_form['firstname'] = user['firstname']
+            user_form['lastname'] = user['lastname']
+            user_form['email'] = user['email']
+            user_form['employee_tel'] = user['employee_tel']
+            user_form['role_id'] = user['role_id']
+            return render_template('edit-user.html', user_form=user_form)
         
 @app.route('/delete-member/<int:id>/', methods=['GET'])
 def delete_member(id):
@@ -265,6 +320,23 @@ def delete_member(id):
         cur.close()
         flash('Delete Member Successfully', 'success')
         return redirect('/member/')
+
+@app.route('/delete-user/<int:id>/', methods=['GET'])
+def delete_user(id):
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        queryStatement = f"DELETE FROM employee WHERE employee_id = {id}"
+        print(queryStatement)
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+        cur.close()
+        flash('Delete User Successfully', 'success')
+        return redirect('/user/')
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
