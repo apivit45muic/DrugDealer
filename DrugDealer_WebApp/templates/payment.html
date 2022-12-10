@@ -16,8 +16,8 @@
                 <th scope="col">Medicine Stock Checkout</th>
                 </tr>
             </thead>
-
             <tbody>
+                <form method="POST">
                 {% for medicine in medicines %}
                     <tr>
                     <th scope="row">{{ medicine['medicine_id'] }}</th>
@@ -25,15 +25,16 @@
                     <td>{{ medicine['medicine_price'] }}</td>
                     <td>{{ medicine['medicine_stock'] }}</td>
                     <td>
-                        <input type="number" class="form-control" id="input1" placeholder="Amount">
+                        <input type="number" class="form-control" id="input1" placeholder="0 - {{medicine['medicine_stock']}}" pattern="[0-9]+">
                     </td>
                     </tr>
                 {% endfor %}
+                </form>
             </tbody>
         </table>
     </div>
     <div class="d-flex flex-column" style="margin: -120px 100px">
         <a href="{{ url_for('CheckOut') }}" class="btn btn-sm btn-primary mt-3 align-self-end">Checkout</a>
-      </div>
+    </div>
 </div>
 {% endblock %}

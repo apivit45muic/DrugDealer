@@ -1,4 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-Hi Noob This is Test
+<div class="h-100 d-flex" style="margin: 0px 100px 100px 60px;">
+    <br>
+        <table class="table mt-2 table-bordered">
+            <thead>
+                <tr>
+                <th scope="col">Medicine ID</th>
+                <th scope="col">Medicine Name</th>
+                <th scope="col">Medicine Price</th>
+                <th scope="col">Medicine Stock</th>
+                <th scope="col">Medicine Stock Checkout</th>
+                <th scope="col">Total to pay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form method="POST">
+                {% for medicine in medicines %}
+                    <tr>
+                    <th scope="row">{{ medicine['medicine_id'] }}</th>
+                    <td>{{ medicine['medicine_name'] }}</td>
+                    <td>{{ medicine['medicine_price'] }}</td>
+                    <td>{{ medicine['medicine_stock'] }}</td>
+                    </tr>
+                {% endfor %}
+                </form>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-column" style="margin: -120px 100px">
+        <button class="btn btn-sm btn-primary mt-3 align-self-end">Checkout</a>
+    </div>
 {% endblock %}
