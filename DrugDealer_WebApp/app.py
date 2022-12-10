@@ -428,27 +428,64 @@ def logout():
 def index_employee():
     return render_template('index_employee.html')
 
-@app.route('/payment/')
+@app.route('/payment/', methods=['GET'])
 def payment():
     try:
         username = session['username']
     except:
         flash('Please sign in first', 'danger')
         return redirect('/login')
-
     cur = mysql.connection.cursor()
     queryStatement = f"SELECT * FROM medicine"
     print(queryStatement)
     result_value = cur.execute(queryStatement) 
-    if result_value > 0:
-        medicines = cur.fetchall()
-        return render_template('payment.html', medicines=medicines)
-    else:
-        return render_template('payment.html',mediciness=None)
+    if request.method == 'GET':
+        if result_value > 0:
+            medicines = cur.fetchall()
+            return render_template('payment.html', medicines=medicines)
+        else:
+            return render_template('payment.html',mediciness=None)
+    # elif request.method == 'POST':
+    #     queryStatement = f"SELECT * FROM medicine"
+    #     result_value = cur.execute(queryStatement) 
+    #     medicines = cur.fetchall()
+    #     drugsNumber = request.form
+    #     for x in range(10):
+    #         print(drugsNumber[x])
+            
     
-@app.route('/CheckOut/')
+@app.route('/CheckOut/', methods=['POST'])
 def CheckOut():
-    return render_template('proceedCheckOut.html')
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        queryStatement = f"SELECT * FROM medicine"
+        result_value = cur.execute(queryStatement) 
+        medicines = cur.fetchall()
+        drugsNumber = request.form
+        print(drugsNumber)
+        length=len(medicines)
+        print(medicines[1])
+        total = 0;
+        for i in range(length):
+            if drugsNumber[medicines[i]['medicine_name']] != '':
+                n = int(drugsNumber[medicines[i]['medicine_name']])
+                if (medicines[i]['medicine_stock']<n):
+                    flash('Are you stupid?', 'danger')
+                    return redirect('/payment')
+                total += n * medicines[i]['medicine_price']
+                left = medicines[i]['medicine_stock']-n
+                queryStatement = f"update medicine set medicine_stock = '{left}' where medicine_name = '{medicines[i]['medicine_name']}'"
+                cur.execute(queryStatement)
+                mysql.connection.commit()
+                cur.close()
+                flash('Stock updated', 'success')
+                
+    return render_template('proceedCheckOut.html', medicines=medicines, orders=drugsNumber, length=length, total=total)    
 
 if __name__ == '__main__':
 	app.run(debug=True)
