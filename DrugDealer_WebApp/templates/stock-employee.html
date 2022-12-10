@@ -3,6 +3,13 @@
 <div class="d-flex justify-content-center">
     <div class="display-2" style="margin: 20px" > Medicine Stock List </div>
 </div>
+<div class="" style="margin: 0px 60px">
+    <div class="search" style="text-align: right;">
+        <form action="{{ url_for('search') }}" method=post>
+            <input type=text name=search placeholder="name" value="{{ request.form.search}}"></br>
+        </form>
+    </div>
+</div>
     <div class="h-100 d-flex" style="margin: 0px 100px 100px 60px;">
         <table class="table mt-3">
             <thead>

@@ -99,7 +99,7 @@ def users():
     else:
         return render_template('users.html')
 
-@app.route('/stock/')
+@app.route('/stock/', methods=['GET', 'POST'])
 def stock():
     try:
         username = session['username']
@@ -114,6 +114,25 @@ def stock():
     	return render_template('stock-admin.html', medicines=medsList)
     else:
     	return render_template('stock-employee.html', medsList=medsList)
+
+@app.route('/search/', methods=['GET', 'POST'])
+def search():
+    try:
+        username = session['username']
+    except:
+        flash('Please sign in first', 'danger')
+        return redirect('/login')
+
+    s = request.form['search']
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM medicine WHERE medicine_name like '%"+s+"%'"
+    cur.execute(queryStatement)
+    medsList = cur.fetchall()
+    if session['userroleid'] == str(2):
+        return render_template('stock-admin.html', medicines=medsList)
+    else:
+        return render_template('stock-employee.html', medsList=medsList)
+
     
     
 # @app.route('/stock-admin/')
@@ -433,3 +452,4 @@ def CheckOut():
 
 if __name__ == '__main__':
 	app.run(debug=True)
+    
