@@ -5,6 +5,11 @@
 </div>
 <div class="" style="margin: 0px 60px">
     <a href="{{ url_for('addmed') }}" class="btn btn-sm btn-primary mt-3">Add New Medicine</a>
+    <div class="search" style="text-align: right;">
+        <form action="{{ url_for('search') }}" method=post>
+            <input type=text name=search placeholder="name" value="{{ request.form.search}}"></br>
+        </form>
+    </div>
 </div>
     <div class="h-100 d-flex" style="margin: 0px 100px 100px 60px;">
         <table class="table mt-3">
