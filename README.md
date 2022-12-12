@@ -13,7 +13,7 @@ Research key requirements:
     - Sale
     - Sale Details
     - Member Information
-    - Business operation
+- Business operation
     - User registration / management
     - Adding / Stock Medicine
     - Member management
