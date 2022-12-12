@@ -48,6 +48,14 @@ create table sale
     discount    int default 0 not null,
     member_id   int references member(member_id),
     employee_id int references employee(employee_id)
-    medicine_id int references medicine(medicine_id),
-    amount      int null
 );
+
+create table sale_detail
+(
+    sale_detail_id int auto_increment
+        primary key,
+    sale_id        int references sale(sale_id),
+    medicine_id    int references medicine(medicine_id),
+    amount         int null
+);
+
