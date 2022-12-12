@@ -15,6 +15,41 @@ app.config['MYSQL_DB'] = cred['mysql_db']
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
+@app.before_first_request
+def initweb():
+    cur = mysql.connection.cursor()
+    queryStatement = f"SELECT * FROM role"
+    result = cur.execute(queryStatement)
+    print(result)
+    if result == 0:
+        createrole = (
+                f"INSERT INTO "
+                f"role(role_id, role_type, role_name) "
+                f"VALUES(1, 'USER', 'user')"
+            )
+        createrole1 = (
+                f"INSERT INTO "
+                f"role(role_id, role_type, role_name) "
+                f"VALUES(2, 'ADMIN', 'admin')"
+            )
+        cur.execute(createrole)
+        cur.execute(createrole1)
+        mysql.connection.commit()
+    
+    queryStatement = f"SELECT * FROM employee WHERE username = 'admin'"
+    result1 = cur.execute(queryStatement)
+    print(result1)
+    if result1 == 0:
+        hashed_pw = generate_password_hash('123456')
+        queryStatement = (
+                f"INSERT INTO "
+                f"employee(username, password, firstname, lastname, email, employee_tel, role_id) "
+                f"VALUES('admin', '{hashed_pw}', 'admin', 'admin', 'admin', '0000000000', 2)"
+            )
+        cur.execute(queryStatement)
+        mysql.connection.commit()
+    cur.close()
+
 @app.route("/")
 def index():
     if 'login' not in session:
