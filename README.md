@@ -25,20 +25,20 @@ Solution : Therefore, it is necessary to have a more standardized pharmacy manag
 
 
 Tables Explain
-Role
-	Roles have one to many relationships with employees because employees can have only one role but each role can be assigned to many employees. This table is used to identify the roles.
+- Role
+	- Roles have one to many relationships with employees because employees can have only one role but each role can be assigned to many employees. This table is used to identify the roles.
 
-Employee
-	Employees have one to many relationships with sale because each employee can manage many sales, and each sale can be managed only once. This table is used to store the employees information.
+- Employee
+	- Employees have one to many relationships with sale because each employee can manage many sales, and each sale can be managed only once. This table is used to store the employees information.
 
-Member
-	Member also have one to many relationships with sale because each member can order many sales, and each sale can be ordered only once. This table is used to store the member information including collecting points and discounts.
+- Member
+	- Member also have one to many relationships with sale because each member can order many sales, and each sale can be ordered only once. This table is used to store the member information including collecting points and discounts.
 
-Sale
-	Sales have one to many with sales detail because when the customer buy many kinds of medicine, sales detail will store many times depending on how many kinds of medicine. This table is used to store the information of the sale of medicine.
+- Sale
+	- Sales have one to many with sales detail because when the customer buy many kinds of medicine, sales detail will store many times depending on how many kinds of medicine. This table is used to store the information of the sale of medicine.
 
-Sale detail
-	This table is used to store the sale information of one or many kinds of medicine.
+- Sale detail
+	- This table is used to store the sale information of one or many kinds of medicine.
 
-Medicine
-	Medicine have one to one relationship with sale. This table is used to store the information of each medicine including the price and stock.
+- Medicine
+	- Medicine have one to one relationship with sale. This table is used to store the information of each medicine including the price and stock.
