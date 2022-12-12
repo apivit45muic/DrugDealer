@@ -1,9 +1,15 @@
-#Database Project Report
-#Drug Dealer
+Database Project Report
+
+Drug Dealer
+
 Team Member :
+
 Thana Lertlum-umpaiwong 6380271
+
 Apiwit Chonkitgosol 6280561
+
 Yossatorn Phithakjiraroj 6280942
+
 
 Research key requirements:
 - Require data
