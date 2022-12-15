@@ -48,3 +48,5 @@ Tables Explain
 
 - Medicine
 	- Medicine have one to one relationship with sale. This table is used to store the information of each medicine including the price and stock.
+
+More Information and Diagram on Report.pdf
